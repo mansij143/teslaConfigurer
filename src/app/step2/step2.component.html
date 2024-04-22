@@ -1,0 +1,32 @@
+<h1>Step 2: Select your config and options</h1>
+
+<div *ngIf="optionsModel">
+  <form (change)="onChange()" [formGroup]="step2Form">
+    <label class="form-label" for="configSelect">Config: </label>
+    <select id="configSelect" name="configSelect" formControlName="configSelect">
+      <option value="" selected>Choose...</option>
+      <option *ngFor="let config of optionsModel.configs; index as i" value="{{i}}">{{ config.description }}</option>
+    </select>
+
+    <div *ngIf="step2Form.get('configSelect')?.valid">
+      <p>
+        Range: {{ optionsModel.configs[step2Form.get('configSelect')?.value].range }} miles -
+        Max speed: {{ optionsModel.configs[step2Form.get('configSelect')?.value].speed }} -
+        Cost: {{ optionsModel.configs[step2Form.get('configSelect')?.value].price | currency : 'USD' }}
+      </p>
+    </div>
+
+    <div *ngIf="optionsModel.towHitch" class="form-check">
+      <label class="form-check-label" for="includeTow">Tow hitch?</label>
+        <input type="checkbox" value="" id="includeTow" formControlName="includeTow" name="includeTow">
+    </div>
+
+    <div *ngIf="optionsModel.yoke" class="form-check">
+      <label class="form-check-label" for="includeYoke"> Yoke steering wheel?</label>
+        <input type="checkbox" value="" id="includeYoke" formControlName="includeYoke" name="includeYoke">
+    </div>
+
+  </form>
+  <img src="https://interstate21.com/tesla-app/images/{{selectedModel.code}}/{{selectedModel.color}}.jpg"
+    alt="{{selectedModel.code}}/{{selectedModel.color}}" style="width: 100%;">
+</div>
